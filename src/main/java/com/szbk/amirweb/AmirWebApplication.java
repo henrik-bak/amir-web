@@ -1,0 +1,13 @@
+package com.szbk.amirweb;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AmirWebApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(AmirWebApplication.class, args);
+	}
+
+}

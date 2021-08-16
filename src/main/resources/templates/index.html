@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AMIR</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<form action="#" th:action="@{/index}" th:object="${fastaRequest}" method="post">
+    <div class="mb-3">
+        <label for="fastaText" class="form-label">Please insert FASTA text</label>
+        <textarea  th:field="*{fastaText}" id="fastaText" placeholder="fastaText" class="form-control" rows="10"></textarea>
+    </div>
+  <input type="submit" value="Parse" class="btn btn-primary"/>
+</form>
+<br/>
+<br/>
+<div>
+    <h6 th:if="${fastaResults==null or fastaResults.empty}">No results yet!</h6>
+    <div th:if="${fastaResults!=null and !fastaResults.empty}">
+        <div class="mb-3">
+            <a class="btn btn-danger" th:href="${blastAllUrl}" target="_blank">Results - Blast all!</a>
+            <button class="btn btn-info" th:data1="${copyString}" th:onclick="javascript:copyToClipboard(this.getAttribute('data1'));">Copy results to clipboard</button>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">FASTA</th>
+                <th scope="col">BLAST</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="fasta : ${fastaResults}">
+                <td th:text="${fasta.number}" scope="row"></td>
+                <td th:text="${fasta.fasta}"></td>
+                <td><a th:href="${fasta.blastUrl}" target="_blank">Blast this!</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(string) {
+ // string.select();
+  const el = document.createElement('textarea');
+  el.value = string;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+}
+</script>
+
+</body>
+</html>
